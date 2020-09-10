@@ -1,0 +1,64 @@
+There is only one beauty parlour in the town CodingNinjasLand. The receptionist at the beauty parlor is flooded with appointment requests because the “Hakori” festival is round the corner and everyone wants to look good on it.
+She needs your help. The problem is they don’t have chairs in reception. They are ordering chairs from NinjasKart. They don’t want to order more than required. You have to tell the minimum number of chairs required such that none of the customers has to stand.
+Input Format :
+First line contains the number of customers that will come. Second line contains N space-separated integers which represent the arrival timings of the customer. Third line contains N space-separated integers which represent the departure timings of the customer. Arrival and departure timings are given in 24-hour clock.
+Constraints:
+1<= N <= 100
+Arrival and departure timings lie in the range [0000 to 2359]
+Time Limit: 1 second
+
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+int findMinChairs(int n, int* arr, int* dep)
+{
+    int chairs = 0;
+    int minChairs = 0;
+    int i,j=0;
+    
+    while(i!=n-1)
+    {
+        if(arr[i]<dep[j])
+        {	
+            i++;
+            chairs++;
+            minChairs = chairs>minChairs ? chairs : minChairs;
+        }
+        else if(arr[i]>dep[j])
+        {
+            j++;
+            chairs--;
+        }
+        else
+        {
+            i++;
+            j++;
+        }
+    }
+    
+    return minChairs;
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    int* arrival = new int[n];
+    int* departure = new int[n];
+    for(int i=0;i<n;i++)
+    {
+        cin>>arrival[i];
+    }
+    
+    for(int i=0;i<n;i++)
+    {
+        cin>>departure[i];
+    }
+    
+    sort(arrival, arrival+n);
+    sort(departure, departure+n);
+    
+    cout<<findMinChairs(n, arrival, departure);
+    
+}
