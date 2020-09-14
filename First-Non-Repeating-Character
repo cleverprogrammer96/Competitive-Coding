@@ -1,0 +1,47 @@
+Given an input string, you have to tell the first character in the string that doesn't repeat in the string. 
+Note: If all the characters happen to occur once only, then return the first character of the string.
+
+Input : The first line contains the actual string 
+
+Output: First non repeating character in the string
+
+Example:
+
+Input: aaabbbcddeef
+Output: c
+
+----------------------------------------------
+
+#include <iostream>
+#include<string>
+#include<unordered_map>
+
+using namespace std;
+
+char FirstNonRepeatingCharacter(string s)
+{
+    unordered_map<char,int> frequency;
+    int length = s.length();
+    for(int i=0;i<length;i++)
+    {
+        frequency[s[i]]++;
+    }
+
+    for(int i=0;i<length;i++)
+    {
+        if(frequency[s[i]]==1)
+        {
+            return s[i];
+        }
+    }
+
+    return s[0];
+}
+
+
+int main()
+{
+    string s;
+    cin>>s;
+    cout<<FirstNonRepeatingCharacter(s);
+}
