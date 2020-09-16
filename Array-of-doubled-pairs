@@ -1,0 +1,53 @@
+Question Link: https://leetcode.com/problems/array-of-doubled-pairs/
+----------------------------------
+
+class Solution {
+public:
+    
+    static bool comparator(int i, int j)
+    {
+        if(i<0 && j<0)
+            return i>j;
+        else
+            return i<j;
+    }
+
+    bool canReorderDoubled(vector<int>& A) {
+    int length = A.size();
+    if(length==0)
+        return true;
+        
+    sort(A.begin(),A.end(), comparator);
+        
+    unordered_map<int,int> Map;
+
+    for(int i=0;i<length;i++)
+    {
+        if(Map.find(A[i])==Map.end()) {
+            Map.insert({A[i], 1});
+        }
+        else{
+            Map[A[i]]++;
+        }
+    }
+    
+    unordered_map<int,int>::iterator it;
+    for(int i=0;i<length;i++)
+    {
+        if(Map[A[i]]!=0 && Map.find(2*A[i])!=Map.end() && Map[2*A[i]]!=0)
+        {
+            Map[A[i]]-=1;
+            Map[2*A[i]]-=1;
+        }
+        else
+        {
+            if(Map[A[i]]!=0 || Map[2*A[i]]>Map[4*A[i]])
+            {
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
+};
