@@ -9,10 +9,22 @@ using namespace std;
 
 void permutationAndPalindrome(string s)
 {
+    int stringLength = s.length();
+    if(stringLength==0)
+    {
+        cout<<"-1"<<endl;
+        return;
+    }
+
+    if(stringLength==1)
+    {
+        cout<<"1"<<endl;
+        return;
+    }
     unordered_map<char,vector<int>> Map;
     unordered_map<char,vector<int>>::iterator it;
     vector<int> result;
-    int stringLength = s.length();
+
     for(int i=0;i<stringLength;i++)
     {
         result.push_back(0);
@@ -31,13 +43,14 @@ void permutationAndPalindrome(string s)
     int oddFrequencyElement = 0;
     for(it=Map.begin();it!=Map.end();it++)
     {
-        if(oddFrequencyCount>1){
-            cout<<-1<<endl;
-            return;
-        }
         if(it->second.size()%2!=0){
             oddFrequencyCount++;
             oddFrequencyElement = it->first;
+        }
+
+        if(oddFrequencyCount>1){
+            cout<<"-1"<<endl;
+            return;
         }
     }
 
