@@ -1,0 +1,89 @@
+Problem Link : https://www.codechef.com/problems/VOTERS
+----------------------------
+
+#include <iostream>
+#include<vector>
+#include<algorithm>
+#include<unordered_map>
+using namespace std;
+
+vector<int> findFinalList(int* l1, int* l2, int* l3, int n1, int n2, int n3)
+{
+    vector<int> finalList;
+    unordered_map<int,int> Map;
+    for(int i=0;i<n1;i++)
+    {
+        if(Map.find(l1[i])==Map.end())
+        {
+            Map.insert({l1[i],1});
+        }
+        else
+        {
+             Map[l1[i]]++;
+        }
+    }
+    for(int i=0;i<n2;i++)
+    {
+        if(Map.find(l1[i])==Map.end())
+        {
+            Map.insert({l2[i],1});
+        }
+        else
+        {
+            Map[l2[i]]++;
+        }
+    }
+    for(int i=0;i<n3;i++)
+    {
+        if(Map.find(l1[i])==Map.end())
+        {
+            Map.insert({l3[i],1});
+        }
+        else
+        {
+            Map[l3[i]]++;
+        }
+    }
+    unordered_map<int,int>::iterator it;
+    for(it = Map.begin();it!=Map.end();it++)
+    {
+        if(it->second>=2)
+        {
+            finalList.push_back(it->first);
+        }
+    }
+
+    return finalList;
+}
+
+int main() {
+    // your code goes here
+    int n1,n2,n3;
+    cin>>n1>>n2>>n3;
+    int l1[n1],l2[n2],l3[n3];
+    for(int i=0;i<n1;i++)
+    {
+        cin>>l1[i];
+    }
+
+    for(int i=0;i<n2;i++)
+    {
+        cin>>l2[i];
+    }
+
+    for(int i=0;i<n3;i++)
+    {
+        cin>>l3[i];
+    }
+
+    vector<int> finalList;
+    finalList = findFinalList(l1,l2,l3,n1,n2,n3);
+    sort(finalList.begin(), finalList.end());
+    cout<<finalList.size()<<endl;
+    for(int a: finalList)
+    {
+        cout<<a<<endl;
+    }
+
+    return 0;
+}
