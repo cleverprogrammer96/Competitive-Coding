@@ -1,0 +1,85 @@
+Code Link: https://www.codechef.com/problems/PERMPAL
+-------------------------------
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <vector>
+
+using namespace std;
+
+void permutationAndPalindrome(string s)
+{
+    unordered_map<char,vector<int>> Map;
+    unordered_map<char,vector<int>>::iterator it;
+    vector<int> result;
+    int stringLength = s.length();
+    for(int i=0;i<stringLength;i++)
+    {
+        result.push_back(0);
+    }
+    for(int i=0; i<stringLength; i++)
+    {
+        if(Map.find(s[i])==Map.end()){
+            Map.insert({s[i], {i+1}});
+        }
+        else{
+            Map[s[i]].push_back(i+1);
+        }
+    }
+
+    int oddFrequencyCount = 0;
+    int oddFrequencyElement = 0;
+    for(it=Map.begin();it!=Map.end();it++)
+    {
+        if(oddFrequencyCount>1){
+            cout<<-1<<endl;
+            return;
+        }
+        if(it->second.size()%2!=0){
+            oddFrequencyCount++;
+            oddFrequencyElement = it->first;
+        }
+    }
+
+    int start=0;
+    int end=stringLength-1;
+    for(it=Map.begin();it!=Map.end();it++)
+    {
+        if(it->first!=oddFrequencyElement)
+        {
+            for(int j=0;j<it->second.size();j+=2)
+            {
+                result[start] = it->second[j];
+                result[end] = it->second[j+1];
+                start+=1;
+                end-=1;
+            }
+        }
+    }
+
+    for(int i=0;i<Map[oddFrequencyElement].size();i++)
+    {
+        result[start] = Map[oddFrequencyElement][i];
+        start++;
+    }
+
+    for(int i: result){
+        cout<<i<<" ";
+    }
+    cout<<endl;
+    return;
+}
+
+int main() {
+    int t;
+    cin>>t;
+    while (t>0) {
+        t--;
+        string s;
+        cin >> s;
+
+        vector<int> result;
+        permutationAndPalindrome(s);
+    }
+    return 0;
+}
