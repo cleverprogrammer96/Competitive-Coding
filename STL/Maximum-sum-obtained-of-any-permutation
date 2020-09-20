@@ -1,0 +1,47 @@
+Problem link: https://leetcode.com/problems/maximum-sum-obtained-of-any-permutation
+
+----------------------------
+static bool comparator(int i, int j)
+    {
+        return i>j;
+    }
+    static bool comparator2(vector<int> i, vector<int> j)
+    {
+        return i[1]>j[1];
+    }
+    
+    int maxSumRangeQuery(vector<int>& nums, vector<vector<int>>& requests) {
+        
+        if(nums.size()==0)
+        {
+            return 0;
+        }
+        
+        unordered_map<int,int> Map;
+        unordered_map<int,int>::iterator it;
+        for(int i=0;i<requests.size();i++)
+        {
+            for(int j=requests[i][0];j<=requests[i][1];j++)
+            {
+                Map[j]++;
+            }
+        }
+        
+        vector<vector<int>> index;
+        
+        for(it=Map.begin();it!=Map.end();it++)
+        {
+            index.push_back({it->first, it->second});
+        }
+        
+        sort(index.begin(), index.end(), comparator2);
+        sort(nums.begin(), nums.end(), comparator);
+        int sum=0, mod = 1e9 + 7;
+        
+        for(int i=0; i<index.size(); i++)
+        {
+            sum = (sum + nums[i]* index[i][1]) % mod;
+        }
+        
+        return sum;
+    }
