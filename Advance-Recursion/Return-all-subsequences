@@ -1,0 +1,33 @@
+Return and then print all subsequences of a string
+-----------------------
+#include<bits/stdc++.h>
+using namespace std;
+
+void findAllSubsequences(string s, string s1, vector<string> &output)
+{
+    if(s.size()==1)
+    {
+        output.push_back(s1+s[0]);
+        output.push_back(s1);
+        return;
+    }
+
+    findAllSubsequences(s.substr(1),s1+s[0], output);
+    findAllSubsequences(s.substr(1),s1, output);
+}
+
+int main() {
+
+    string s;
+    getline(cin, s);
+    string s1="";
+    vector<string> output;
+    findAllSubsequences(s,s1, output);
+
+    for(int i=0;i<output.size();i++)
+    {
+        cout<<output[i]<<endl;
+    }
+
+    return 0;
+}
