@@ -1,0 +1,67 @@
+My C++ code for merge sort
+----------------------------
+#include<bits/stdc++.h>
+using namespace std;
+
+void Merge(int input[], int start, int mid, int end){
+    vector<int> temp;
+    vector<int> temp2;
+    for(int i=start;i<=mid;i++)
+    {
+        temp.push_back(input[i]);
+    }
+    
+    for(int i=mid+1;i<=end;i++)
+    {
+        temp2.push_back(input[i]);
+    }
+    
+    
+    int i=0, j=0;
+    for(int iterator = start; iterator<=end; iterator++)
+    {
+        if(i>mid-start)
+        {
+            input[iterator] = temp2[j];
+            j++;
+        }
+        else if(j>end-(mid+1))
+        {
+            input[iterator] = temp[i];
+            i++;
+        }
+        
+        else if(temp[i]<temp2[j])
+        {
+            input[iterator] = temp[i];
+            i++;
+        }
+        
+		else
+        {
+            input[iterator] = temp2[j];
+            j++;
+        }
+    }
+}
+
+void MergeSort(int input[], int start, int end){
+    if(start>=end)
+    {
+        return;
+    }
+    
+    else
+    {
+        int mid = (start+end)/2;
+        MergeSort(input, start, mid);
+        MergeSort(input, mid+1, end);
+
+        Merge(input, start, mid, end);
+    }
+}
+
+void mergeSort(int input[], int size){
+    int start = 0, end = size-1;
+    MergeSort(input, start, end);
+}
