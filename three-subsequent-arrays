@@ -1,0 +1,43 @@
+For a given array, determine if the array can be divided into three subsequent arrays whose sum is the same. Return true or false.
+For e.g. arr=[10,10,15,5,20], for this array, we can divide it as [10,10], [15,5] and [20]. All the subarrays have 20 as sum.
+
+#include <iostream>
+
+using namespace std;
+
+bool isPossible(int arr[], int n)
+{
+    int sum = 0;
+    for(int i=0;i<n;i++)
+    {
+        sum+= arr[i];
+    }
+    
+    if(sum%3!=0)
+        return false;
+        
+    int thirdSum = sum/3; 
+    sum = 0;
+    int subarrays = 0;
+    
+    for(int i=0;i<n;i++)
+    {
+        sum+=arr[i];
+        if(sum==thirdSum)
+        {
+            sum = 0;
+            subarrays+=1;
+        }
+    }
+    
+    if(sum==0 && subarrays==3)
+        return true;
+        
+    return false;
+}
+
+int main()
+{
+    int arr[] = {11,10,15,5,20};
+    cout<<(bool)isPossible(arr,5);
+}
